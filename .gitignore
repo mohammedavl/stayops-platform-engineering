@@ -1,0 +1,31 @@
+# Local cluster state
+.kube/
+kubeconfig
+*.kubeconfig
+.env
+.env.*
+!.env.example
+secrets/
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated artifacts
+*.log
+coverage/
+dist/
+build/

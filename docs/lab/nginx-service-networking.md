@@ -58,3 +58,8 @@ User ran six curls from a temporary pod in `stayops-staging` against `http://ngi
 - Dev overlay: namespace `stayops-dev`, 2 replicas (previously rendered and applied via base; dev overlay render confirms configuration).
 - Staging overlay: namespace `stayops-staging`, 3 replicas; deployed and HTTP-tested successfully.
 - Separate namespaces and namespace-scoped resources establish lab environment separation; this is not a claim of security-grade tenant isolation.
+
+
+## Dev overlay apply and convergence check — 2026-11-06
+
+User explicitly applied `kubectl apply -k deploy/kubernetes/overlays/dev`: Service and Deployment reported `unchanged`; `kubectl rollout status deployment/nginx -n stayops-dev` reported successfully rolled out. Both Dev and Staging `kubectl diff -k` commands emitted no diff text in the captured terminal output. No exit codes were captured, so record as no visible diff (consistent with convergence), not formally confirmed exit status 0.

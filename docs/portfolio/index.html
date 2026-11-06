@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StayOps | Platform Engineering</title>
+  <meta name="description" content="StayOps enterprise platform engineering portfolio: Kubernetes, automation, governance, and security validation.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --panel: #131b2e;
+      --text: #edf2ff;
+      --muted: #a4b0ca;
+      --accent: #7dd3fc;
+      --green: #86efac;
+      --border: #293650;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.7 system-ui, sans-serif;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header, main, footer { max-width: 1080px; margin: auto; padding: 24px; }
+    header { display: flex; justify-content: space-between; align-items: center; }
+    nav { display: flex; gap: 20px; flex-wrap: wrap; }
+    .hero { padding: 90px 24px 65px; }
+    .eyebrow { color: var(--green); text-transform: uppercase; letter-spacing: 2px; font-size: 13px; }
+    h1 { font-size: clamp(42px, 8vw, 76px); line-height: 1.05; margin: 15px 0; }
+    h2 { font-size: 28px; margin-top: 55px; }
+    h3 { margin-bottom: 8px; }
+    .lead { max-width: 760px; color: var(--muted); font-size: 20px; }
+    .buttons { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
+    .button { padding: 11px 18px; border: 1px solid var(--border); border-radius: 8px; }
+    .primary { background: var(--accent); color: #07111e; font-weight: 700; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 16px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+    .muted { color: var(--muted); }
+    .tag { display: inline-block; border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; margin: 4px 4px 4px 0; color: var(--muted); font-size: 13px; }
+    .status { color: var(--green); font-weight: 600; }
+    .notice { border-left: 3px solid var(--accent); padding: 14px 18px; background: var(--panel); }
+    footer { color: var(--muted); border-top: 1px solid var(--border); margin-top: 60px; }
+    @media (max-width: 600px) { header { align-items: flex-start; flex-direction: column; gap: 12px; } .hero { padding-top: 55px; } }
+  </style>
+</head>
+<body>
+<header>
+  <strong>STAYOPS<span style="color:#7dd3fc">/</span>ENGINEERING</strong>
+  <nav>
+    <a href="#architecture">Architecture</a>
+    <a href="#engineering">Engineering</a>
+    <a href="#evidence">Evidence</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="eyebrow">Enterprise Platform Engineering · Project Portfolio</div>
+  <h1>Engineering a<br>governed platform.</h1>
+  <p class="lead">
+    StayOps is a hands-on platform engineering lab exploring Kubernetes
+    workload governance, persistent storage, least-privilege access,
+    and network isolation through repeatable validation.
+  </p>
+  <div class="buttons">
+    <a class="button primary" href="https://github.com/mohammedavl/stayops-platform-engineering">Explore GitHub →</a>
+    <a class="button" href="https://github.com/mohammedavl/stayops-platform-engineering/blob/main/docs/progress/evidence-ledger.md">Validation evidence</a>
+  </div>
+</section>
+
+<section id="architecture">
+  <h2>Platform architecture</h2>
+  <div class="card">
+    <p><strong>Developer workstation</strong> → WSL2 / Ubuntu → Docker Desktop → kind Kubernetes</p>
+    <p>↓</p>
+    <p><strong>Platform configuration</strong> → Kustomize · Helm · YAML · Git</p>
+    <p>↓</p>
+    <p><strong>Workload environments</strong> → Development · Staging</p>
+    <p>↓</p>
+    <p><strong>Governance</strong> → Resource limits · Probes · Storage · RBAC · NetworkPolicy</p>
+    <p class="muted">NetworkPolicy enforcement is tested separately in an isolated Calico-enabled kind cluster.</p>
+  </div>
+  <p>
+    <span class="tag">Kubernetes</span><span class="tag">kind</span>
+    <span class="tag">Calico</span><span class="tag">Kustomize</span>
+    <span class="tag">Helm</span><span class="tag">GitHub Actions</span>
+  </p>
+</section>
+
+<section id="engineering">
+  <h2>Engineering milestones</h2>
+  <div class="grid">
+    <article class="card">
+      <h3>01 · Workload governance</h3>
+      <p class="muted">CPU and memory requests/limits, readiness/liveness probes, and environment overlays.</p>
+      <span class="status">✓ Validated</span>
+    </article>
+    <article class="card">
+      <h3>02 · Persistent storage</h3>
+      <p class="muted">PVC provisioning, mount verification, and data persistence through pod recreation.</p>
+      <span class="status">✓ Lab acceptance passed</span>
+    </article>
+    <article class="card">
+      <h3>03 · Least-privilege RBAC</h3>
+      <p class="muted">Namespace-scoped auditor permissions and restricted workload service accounts.</p>
+      <span class="status">✓ Lab authorization checks passed</span>
+    </article>
+    <article class="card">
+      <h3>04 · Network isolation</h3>
+      <p class="muted">Calico-enforced default-deny ingress and selective application access.</p>
+      <span class="status">✓ Automated validation passed</span>
+    </article>
+    <article class="card">
+      <h3>05 · Continuous validation</h3>
+      <p class="muted">GitHub Actions checks YAML and renders base, development, and staging manifests.</p>
+      <span class="status">✓ CI workflow passing</span>
+    </article>
+    <article class="card">
+      <h3>06 · Platform decisions</h3>
+      <p class="muted">Architecture documentation, requirements traceability, and an evidence ledger.</p>
+      <span class="status">✓ Documented</span>
+    </article>
+  </div>
+</section>
+
+<section id="evidence">
+  <h2>Evidence & reproducibility</h2>
+  <div class="grid">
+    <article class="card">
+      <h3>Repository</h3>
+      <p>Configuration, scripts, manifests, and project documentation.</p>
+      <a href="https://github.com/mohammedavl/stayops-platform-engineering">Browse source →</a>
+    </article>
+    <article class="card">
+      <h3>Evidence ledger</h3>
+      <p>Acceptance outcomes, validation scope, and engineering limitations.</p>
+      <a href="https://github.com/mohammedavl/stayops-platform-engineering/blob/main/docs/progress/evidence-ledger.md">Read evidence →</a>
+    </article>
+    <article class="card">
+      <h3>CI pipeline</h3>
+      <p>Inspect automated repository validation and workflow history.</p>
+      <a href="https://github.com/mohammedavl/stayops-platform-engineering/actions">View GitHub Actions →</a>
+    </article>
+  </div>
+</section>
+
+<section>
+  <h2>Scope & engineering honesty</h2>
+  <div class="notice">
+    StayOps is a local engineering laboratory, not a production deployment.
+    Results demonstrate behavior in the tested kind/Calico environment.
+    They do not establish production availability, disaster recovery,
+    cloud security, compliance certification, or production capacity.
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>StayOps · Enterprise Platform Engineering · Engineering portfolio</p>
+  <p>Built with HTML and CSS · Published using GitHub Pages</p>
+</footer>
+</body>
+</html>

@@ -166,3 +166,11 @@ This ledger captures the project work and validations reported in the conversati
 - Storage test pods mounted each claim and wrote unique marker files. Pods were deleted and recreated; marker contents remained unchanged in both namespaces.
 - NGINX rollout succeeded after storage tests. User output confirms validation script reached step 8; final HTTP smoke-test/result lines not included in pasted excerpt, so record only rollout and persistence evidence here.
 - Verified: PVC binding and persistence across pod recreation in local kind. Not verified: backup/restore, PV reclaim behavior, production storage durability, or full final script PASS summary.
+
+
+## Persistent storage acceptance — FULL PASS — 2026-11-07
+- Validation script `scripts/validate-storage.sh` completed all 8 steps and printed final `PASS: Storage provisioning and persistence`.
+- Dev and staging `stayops-data` PVCs each Bound to dynamically provisioned 1 GiB RWO PVs under StorageClass `standard` (`rancher.io/local-path`, `WaitForFirstConsumer`).
+- Storage test pods mounted claims, wrote unique marker values, were deleted/recreated, and read identical marker values afterward in both namespaces.
+- NGINX rollout succeeded in both environments; in-cluster HTTP smoke tests returned HTTP 200; temporary HTTP test pods were deleted.
+- Evidence scope: local kind PVC provisioning, pod-recreation persistence, and dev/staging service smoke tests. Backup/restore, PV reclaim, and production durability remain outside this test.

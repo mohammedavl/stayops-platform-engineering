@@ -87,3 +87,14 @@ This ledger captures the project work and validations reported in the conversati
 - Architecture overview update: commit `3da2add371ffcd977abe8af79250c4e3c94881be`.
 - User synchronized local checkout with successful fast-forward `674e054..3da2add`; ADR file present and `git status --short` showed no changes.
 - Next architecture activity: formalize platform requirements, constraints, and acceptance criteria before choosing any OpenShift/cloud topology or provisioning approach.
+
+
+## Workstation resource assessment — 2026-11-06
+- Ubuntu WSL reported 20 logical CPUs; CPU model Intel 13th Gen Core i9-13900H.
+- WSL `free -h`: 15 GiB RAM total, ~13 GiB available at measurement; 4 GiB swap configured and unused.
+- WSL root filesystem `df -h /`: 1007 GiB size, 954 GiB available at measurement. This is WSL filesystem capacity, not direct Windows C: free-space evidence.
+- Docker `docker info`: 20 CPUs, 16,633,741,312 bytes memory (~15.5 GiB), overlayfs.
+- kind cluster `stayops`: control-plane and both workers Ready, Kubernetes v1.35.0.
+- Git working tree clean.
+- Constraint: use Docker/WSL effective resource view for lab sizing; host physical RAM (~31.75 GiB previously observed) is not equivalent to currently allocated/visible WSL memory.
+- Recommendation: retain kind as validated baseline; assess OpenShift topology and resource budgets separately before installation.

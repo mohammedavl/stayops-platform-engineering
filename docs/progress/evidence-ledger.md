@@ -122,3 +122,12 @@ This ledger captures the project work and validations reported in the conversati
 - GitHub Actions run/job API returned zero jobs for these runs; root cause is not established from available run metadata. Do not claim a green CI result or infer a failing step.
 - Run links: https://github.com/mohammedavl/stayops-platform-engineering/actions/runs/42279735125 and https://github.com/mohammedavl/stayops-platform-engineering/actions/runs/42279760223
 - CI acceptance remains open pending investigation of Actions UI/run details.
+
+
+## CI validation milestone completed — 2026-11-07
+- Corrected deployment manifest startup-script formatting to satisfy yamllint line-length rule; commit `140cd34` (`fix: resolve deployment yaml lint line length`).
+- GitHub Actions run #36 succeeded: YAML syntax job and Kubernetes Kustomize build job both green. Run URL: https://github.com/mohammedavl/stayops-platform-engineering/actions/runs/4228421332
+- Local Kustomize base/dev/staging builds had previously returned exit code 0.
+- Non-blocking annotations remain: missing YAML document-start markers, truthy warning for workflow `on`, and Node.js 20 action deprecation notice. CI success does not establish cluster deployment or runtime health.
+- CI baseline acceptance criterion closed: repository YAML lint and Kustomize rendering run automatically on push/PR/manual dispatch.
+- Remaining CI maturity work: Kubernetes schema/policy checks, test/deployment validation, and action runtime modernization.

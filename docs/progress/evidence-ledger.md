@@ -147,3 +147,14 @@ This ledger captures the project work and validations reported in the conversati
 - Current in-progress milestone: apply NGINX CPU/memory requests/limits and startup/readiness/liveness probes, then validate rollout and Service HTTP in dev/staging. No changes applied yet; user supplied live staging evidence showing 3/3 available and current `resources: {}`.
 - Remaining broad scope includes storage/PVC, RBAC/security/admission/network policies, GitOps, monitoring/observability, backup/restore and failure tests, OpenShift topology/features and associated runbooks/portfolio evidence.
 - FR-04 traceability updated to Partial: standard published, compliant workload example and runtime controls pending (GitHub commit `3a558f8df03cedcd4276`).
+
+
+## NGINX workload governance implemented and runtime-validated — 2026-11-07
+- Added container CPU/memory requests (`100m`, `64Mi`) and limits (`500m`, `256Mi`) in `deploy/kubernetes/base/deployment.yaml`.
+- Added HTTP startup (`5s`, failure threshold 12), readiness (`5s`), and liveness (`10s`) probes on `/`.
+- Applied configuration to `stayops-dev` and `stayops-staging`; rollout status successful in both namespaces.
+- Dev: 2/2 available, two Running pods across worker/worker2, zero restarts, two Service endpoints, HTTP 200.
+- Staging: 3/3 available, three Running pods across worker/worker2, zero restarts, three Service endpoints, HTTP 200.
+- `kubectl describe deployment` confirmed resources and all probes; Kustomize base/dev/staging render passed; `git diff --check` passed. yamllint reports only existing missing document-start (`---`) warning.
+- Evidence establishes lab runtime behavior, not production sizing, balancing guarantees, or failure recovery.
+- Local manifest change still needs Git commit/push and CI verification. Next: commit this configuration, update FR-04 traceability, then begin persistent storage lab.

@@ -1,167 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>StayOps | Platform Engineering</title>
-  <meta name="description" content="StayOps enterprise platform engineering portfolio: Kubernetes, automation, governance, and security validation.">
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #0b1020;
-      --panel: #131b2e;
-      --text: #edf2ff;
-      --muted: #a4b0ca;
-      --accent: #7dd3fc;
-      --green: #86efac;
-      --border: #293650;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font: 16px/1.7 system-ui, sans-serif;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    header, main, footer { max-width: 1080px; margin: auto; padding: 24px; }
-    header { display: flex; justify-content: space-between; align-items: center; }
-    nav { display: flex; gap: 20px; flex-wrap: wrap; }
-    .hero { padding: 90px 24px 65px; }
-    .eyebrow { color: var(--green); text-transform: uppercase; letter-spacing: 2px; font-size: 13px; }
-    h1 { font-size: clamp(42px, 8vw, 76px); line-height: 1.05; margin: 15px 0; }
-    h2 { font-size: 28px; margin-top: 55px; }
-    h3 { margin-bottom: 8px; }
-    .lead { max-width: 760px; color: var(--muted); font-size: 20px; }
-    .buttons { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
-    .button { padding: 11px 18px; border: 1px solid var(--border); border-radius: 8px; }
-    .primary { background: var(--accent); color: #07111e; font-weight: 700; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 16px; }
-    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
-    .muted { color: var(--muted); }
-    .tag { display: inline-block; border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; margin: 4px 4px 4px 0; color: var(--muted); font-size: 13px; }
-    .status { color: var(--green); font-weight: 600; }
-    .notice { border-left: 3px solid var(--accent); padding: 14px 18px; background: var(--panel); }
-    footer { color: var(--muted); border-top: 1px solid var(--border); margin-top: 60px; }
-    @media (max-width: 600px) { header { align-items: flex-start; flex-direction: column; gap: 12px; } .hero { padding-top: 55px; } }
-  </style>
-</head>
-<body>
-<header>
-  <strong>STAYOPS<span style="color:#7dd3fc">/</span>ENGINEERING</strong>
-  <nav>
-    <a href="#architecture">Architecture</a>
-    <a href="#engineering">Engineering</a>
-    <a href="#evidence">Evidence</a>
-  </nav>
-</header>
-
-<main>
-<section class="hero">
-  <div class="eyebrow">Enterprise Platform Engineering · Project Portfolio</div>
-  <h1>Engineering a<br>governed platform.</h1>
-  <p class="lead">
-    StayOps is a hands-on platform engineering lab exploring Kubernetes
-    workload governance, persistent storage, least-privilege access,
-    and network isolation through repeatable validation.
-  </p>
-  <div class="buttons">
-    <a class="button primary" href="https://github.com/mohammedavl/stayops-platform-engineering">Explore GitHub →</a>
-    <a class="button" href="https://github.com/mohammedavl/stayops-platform-engineering/blob/main/docs/progress/evidence-ledger.md">Validation evidence</a>
-  </div>
-</section>
-
-<section id="architecture">
-  <h2>Platform architecture</h2>
-  <div class="card">
-    <p><strong>Developer workstation</strong> → WSL2 / Ubuntu → Docker Desktop → kind Kubernetes</p>
-    <p>↓</p>
-    <p><strong>Platform configuration</strong> → Kustomize · Helm · YAML · Git</p>
-    <p>↓</p>
-    <p><strong>Workload environments</strong> → Development · Staging</p>
-    <p>↓</p>
-    <p><strong>Governance</strong> → Resource limits · Probes · Storage · RBAC · NetworkPolicy</p>
-    <p class="muted">NetworkPolicy enforcement is tested separately in an isolated Calico-enabled kind cluster.</p>
-  </div>
-  <p>
-    <span class="tag">Kubernetes</span><span class="tag">kind</span>
-    <span class="tag">Calico</span><span class="tag">Kustomize</span>
-    <span class="tag">Helm</span><span class="tag">GitHub Actions</span>
-  </p>
-</section>
-
-<section id="engineering">
-  <h2>Engineering milestones</h2>
-  <div class="grid">
-    <article class="card">
-      <h3>01 · Workload governance</h3>
-      <p class="muted">CPU and memory requests/limits, readiness/liveness probes, and environment overlays.</p>
-      <span class="status">✓ Validated</span>
-    </article>
-    <article class="card">
-      <h3>02 · Persistent storage</h3>
-      <p class="muted">PVC provisioning, mount verification, and data persistence through pod recreation.</p>
-      <span class="status">✓ Lab acceptance passed</span>
-    </article>
-    <article class="card">
-      <h3>03 · Least-privilege RBAC</h3>
-      <p class="muted">Namespace-scoped auditor permissions and restricted workload service accounts.</p>
-      <span class="status">✓ Lab authorization checks passed</span>
-    </article>
-    <article class="card">
-      <h3>04 · Network isolation</h3>
-      <p class="muted">Calico-enforced default-deny ingress and selective application access.</p>
-      <span class="status">✓ Automated validation passed</span>
-    </article>
-    <article class="card">
-      <h3>05 · Continuous validation</h3>
-      <p class="muted">GitHub Actions checks YAML and renders base, development, and staging manifests.</p>
-      <span class="status">✓ CI workflow passing</span>
-    </article>
-    <article class="card">
-      <h3>06 · Platform decisions</h3>
-      <p class="muted">Architecture documentation, requirements traceability, and an evidence ledger.</p>
-      <span class="status">✓ Documented</span>
-    </article>
-  </div>
-</section>
-
-<section id="evidence">
-  <h2>Evidence & reproducibility</h2>
-  <div class="grid">
-    <article class="card">
-      <h3>Repository</h3>
-      <p>Configuration, scripts, manifests, and project documentation.</p>
-      <a href="https://github.com/mohammedavl/stayops-platform-engineering">Browse source →</a>
-    </article>
-    <article class="card">
-      <h3>Evidence ledger</h3>
-      <p>Acceptance outcomes, validation scope, and engineering limitations.</p>
-      <a href="https://github.com/mohammedavl/stayops-platform-engineering/blob/main/docs/progress/evidence-ledger.md">Read evidence →</a>
-    </article>
-    <article class="card">
-      <h3>CI pipeline</h3>
-      <p>Inspect automated repository validation and workflow history.</p>
-      <a href="https://github.com/mohammedavl/stayops-platform-engineering/actions">View GitHub Actions →</a>
-    </article>
-  </div>
-</section>
-
-<section>
-  <h2>Scope & engineering honesty</h2>
-  <div class="notice">
-    StayOps is a local engineering laboratory, not a production deployment.
-    Results demonstrate behavior in the tested kind/Calico environment.
-    They do not establish production availability, disaster recovery,
-    cloud security, compliance certification, or production capacity.
-  </div>
-</section>
-</main>
-
-<footer>
-  <p>StayOps · Enterprise Platform Engineering · Engineering portfolio</p>
-  <p>Built with HTML and CSS · Published using GitHub Pages</p>
-</footer>
-</body>
-</html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StayOps | Enterprise Platform Engineering</title>
+<meta name="description" content="StayOps Kubernetes platform engineering lab: workload governance, storage, RBAC, Calico NetworkPolicy, CI, and repeatable validation.">
+<style>
+:root{color-scheme:dark;--bg:#080d19;--panel:#111b2d;--panel2:#16243a;--text:#edf3ff;--muted:#9eacc4;--line:#293b56;--blue:#7dd3fc;--green:#86efac}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 78% 0%,#10264b 0,transparent 35%),var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap{max-width:1160px;margin:auto;padding:0 26px}
+header{position:sticky;top:0;z-index:5;background:#080d19ef;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:800;letter-spacing:.04em}.brand b{color:var(--blue)}nav{display:flex;gap:24px;flex-wrap:wrap;font-size:14px}
+.hero{padding:90px 0 70px}.eyebrow,.kicker{color:var(--green);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}.hero h1{font-size:clamp(44px,7vw,78px);line-height:1.02;letter-spacing:-.045em;max-width:900px;margin:20px 0}.lead{font-size:20px;color:var(--muted);max-width:820px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-block;padding:11px 17px;border-radius:9px;border:1px solid var(--line);font-weight:650}.btn.primary{background:var(--blue);color:#07111c;border-color:var(--blue)}
+section{padding:44px 0;scroll-margin-top:80px}h2{font-size:30px;line-height:1.2;margin:8px 0 22px}h3{font-size:18px;margin:0 0 8px}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.card{background:linear-gradient(145deg,var(--panel),#0e1727);border:1px solid var(--line);border-radius:15px;padding:22px}.card p{margin:7px 0;color:var(--muted)}.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:4px 10px;color:var(--muted);font-size:12px;margin:4px 4px 0 0}.pass{color:var(--green);font-weight:700;font-size:13px}.note{padding:17px 20px;border-left:3px solid var(--blue);background:var(--panel);border-radius:0 10px 10px 0;color:var(--muted)}
+.arch{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:center}.archbox{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}.arrow{color:var(--blue);font-size:24px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:18px}.shot{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}.shot img{display:block;width:100%;height:auto;background:#101827}.shot figcaption{padding:14px 16px}.shot strong{display:block}.shot span{color:var(--muted);font-size:13px}
+.metric{font-size:28px;font-weight:800;color:var(--green);letter-spacing:-.03em}.metric small{font-size:13px;color:var(--muted);font-weight:500;letter-spacing:0}
+footer{border-top:1px solid var(--line);padding:30px 0 50px;color:var(--muted);font-size:14px}
+@media(max-width:720px){.nav{padding:15px 0;align-items:flex-start;flex-direction:column}nav{gap:14px}.hero{padding:60px 0 40px}.arch{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}}
+</style>
+</head><body>
+<header><div class="wrap nav"><a class="brand" href="#">STAYOPS<b>/</b>ENGINEERING</a><nav><a href="#architecture">Architecture</a><a href="#capabilities">Capabilities</a><a href="#evidence">Evidence gallery</a><a href="#scope">Scope</a><a href="https://github.com/mohammedavl/stayops-platform-engineering">GitHub ↗</a></nav></div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">Enterprise platform engineering · Hands-on project</div><h1>Engineering a<br>governed Kubernetes platform.</h1>
+<p class="lead">StayOps is an infrastructure engineering lab built around a fictional hospitality platform scenario—not a hotel booking application. It explores repeatable workload delivery, operational governance, persistent storage, least-privilege access, and network isolation.</p>
+<div class="actions"><a class="btn primary" href="https://github.com/mohammedavl/stayops-platform-engineering">Explore source repository →</a><a class="btn" href="https://github.com/mohammedavl/stayops-platform-engineering/blob/main/docs/progress/evidence-ledger.md">Read validation evidence</a><a class="btn" href="https://github.com/mohammedavl/stayops-platform-engineering/actions">CI workflow history</a></div>
+<div style="margin-top:30px"><span class="pill">Kubernetes</span><span class="pill">kind</span><span class="pill">Calico</span><span class="pill">Kustomize</span><span class="pill">Helm</span><span class="pill">GitHub Actions</span><span class="pill">WSL2 / Docker Desktop</span></div></section>
+<section id="architecture"><div class="kicker">01 / System view</div><h2>Platform architecture</h2><div class="arch"><div class="archbox"><strong>Developer workstation</strong><p class="muted">Windows · WSL2 · Ubuntu · Docker Desktop</p></div><div class="arrow">→</div><div class="archbox"><strong>Kubernetes environments</strong><p class="muted">kind · Development · Staging</p></div><div class="arrow">→</div><div class="archbox"><strong>Platform controls</strong><p class="muted">Resources · Probes · PVC · RBAC</p></div></div><div class="note" style="margin-top:15px">NetworkPolicy enforcement was validated separately in an isolated kind cluster with Calico installed. The original workload cluster was kept separate from this CNI experiment.</div></section>
+<section id="capabilities"><div class="kicker">02 / Engineering outcomes</div><h2>What was implemented and tested</h2><div class="grid">
+<article class="card"><h3>Workload governance</h3><p>CPU and memory requests/limits, readiness and liveness probes, and environment-specific NGINX workloads.</p><div class="pass">✓ Development and staging workloads healthy</div></article>
+<article class="card"><h3>Persistent storage</h3><p>Dynamic PVC provisioning, mount/write checks, and persistence marker verified after deleting and recreating test pods.</p><div class="pass">✓ Storage acceptance script passed</div></article>
+<article class="card"><h3>Least-privilege RBAC</h3><p>Namespace-scoped auditor RoleBindings and restricted runtime service accounts, with positive and negative authorization checks.</p><div class="pass">✓ Read allowed; write/delete denied</div></article>
+<article class="card"><h3>Network isolation</h3><p>Calico-enforced ingress default-deny with a narrow client-to-web TCP/80 allow rule.</p><div class="pass">✓ Authorized allowed; unauthorized blocked</div></article>
+<article class="card"><h3>Repository CI</h3><p>GitHub Actions validates YAML and renders Kustomize base, development, and staging configurations.</p><div class="pass">✓ Run #36 passed both jobs</div></article>
+<article class="card"><h3>Platform documentation</h3><p>Architecture decision record, requirements traceability, workload onboarding standard, and evidence ledger.</p><div class="pass">✓ Committed to repository</div></article></div></section>
+<section><div class="kicker">03 / Validation snapshot</div><h2>Observed lab results</h2><div class="grid">
+<div class="card"><div class="metric">2/2 <small>development NGINX pods</small></div><p>Ready after workload governance changes.</p></div>
+<div class="card"><div class="metric">3/3 <small>staging NGINX pods</small></div><p>Ready after workload governance changes.</p></div>
+<div class="card"><div class="metric">1 Gi <small>per environment PVC</small></div><p>Development and staging claims reached Bound.</p></div>
+<div class="card"><div class="metric">HTTP 200 <small>service checks</small></div><p>NGINX remained reachable after storage tests.</p></div></div></section>
+<section id="evidence"><div class="kicker">04 / Screenshots from the lab</div><h2>Evidence gallery</h2><p class="muted">Selected terminal and GitHub screenshots captured during implementation. Earlier CI failures are shown as debugging history, followed by the later successful run; they are not presented as passing builds.</p>
+<div class="gallery">
+<figure class="shot"><img src="assets/cluster-load.png" alt="kind cluster with backend test sending requests to NGINX service"><figcaption><strong>Service request distribution</strong><span>Repeated requests to the NGINX service returned responses from different backend pods.</span></figcaption></figure>
+<figure class="shot"><img src="assets/docker-logs.png" alt="Docker Desktop container logs for kind nodes"><figcaption><strong>Container and node logs</strong><span>Docker Desktop view of the local kind control plane and worker-node activity.</span></figcaption></figure>
+<figure class="shot"><img src="assets/storage-pass.png" alt="Storage validation showing persistence marker survived pod recreation"><figcaption><strong>Persistent storage validation</strong><span>Marker survived test-pod deletion and recreation; PVCs remained Bound.</span></figcaption></figure>
+<figure class="shot"><img src="assets/networkpolicy-pass.png" alt="NetworkPolicy script output with ingress policy tests passing"><figcaption><strong>NetworkPolicy enforcement</strong><span>Default deny blocked traffic; selective allow restored authorized access while the unauthorized pod remained blocked.</span></figcaption></figure>
+<figure class="shot"><img src="assets/ci-failed-debug.png" alt="GitHub Actions YAML lint failure during workflow debugging"><figcaption><strong>CI debugging history</strong><span>Earlier run exposed workflow YAML and lint issues. Included as troubleshooting evidence only.</span></figcaption></figure>
+<figure class="shot"><img src="assets/ci-pass.png" alt="GitHub Actions successful run with YAML syntax and Kustomize build jobs green"><figcaption><strong>CI validation passed</strong><span>Run #36 shows YAML syntax and Kubernetes Kustomize build jobs both successful; non-blocking warnings remained.</span></figcaption></figure>
+<figure class="shot"><img src="assets/portfolio-preview.png" alt="StayOps portfolio website local browser preview"><figcaption><strong>Portfolio preview</strong><span>Local browser preview before GitHub Pages publication.</span></figcaption></figure>
+</div></section>
+<section id="scope"><div class="kicker">05 / Scope and limitations</div><h2>What this evidence does—and does not—prove</h2><div class="note">StayOps is a local engineering lab using kind on Docker Desktop/WSL2. Tests demonstrate observed behavior in this environment. They do not establish production availability, backup/restore or disaster recovery, cloud-provider behavior, multi-region resilience, compliance certification, production sizing, or security certification. The storage test proves persistence across pod recreation—not backup recovery. NetworkPolicy testing covers selective ingress in the isolated Calico lab, not egress or every cross-namespace scenario.</div><p style="margin-top:22px"><a href="https://github.com/mohammedavl/stayops-platform-engineering/blob/main/docs/progress/evidence-ledger.md">Detailed evidence ledger →</a> · <a href="https://github.com/mohammedavl/stayops-platform-engineering/tree/main/deploy/kubernetes">Kubernetes manifests →</a> · <a href="https://github.com/mohammedavl/stayops-platform-engineering/tree/main/scripts">Validation scripts →</a></p></section>
+</main><footer><div class="wrap">StayOps · Enterprise Platform Engineering · Local engineering lab portfolio · <a href="https://github.com/mohammedavl/stayops-platform-engineering">Source on GitHub</a></div></footer>
+</body></html>

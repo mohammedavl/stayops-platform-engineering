@@ -70,3 +70,9 @@ This ledger captures the project work and validations reported in the conversati
 - Live Staging: nginx Deployment 3/3 available; nginx-service ClusterIP 10.96.251.21:80; three pods Running/Ready, zero restarts, spread across worker and worker2.
 - Staging Service HTTP smoke test (six requests) returned expected StayOps HTML; observed two of three backends in sample. See NGINX evidence page for detail.
 - Verified separate namespace/resource configuration and successful staging deployment. Dev overlay rendering is verified; next step is applying Dev overlay explicitly and checking `kubectl diff -k` for both environments (diff exit code 0 means no changes; 1 means differences).
+
+
+## Dev overlay explicit apply — 2026-11-06
+- Applied `kubectl apply -k deploy/kubernetes/overlays/dev`: Service and Deployment unchanged.
+- Rollout status successfully rolled out.
+- Dev and Staging `kubectl diff -k` emitted no text; exit codes not captured, so no visible diff recorded without asserting exit code 0.

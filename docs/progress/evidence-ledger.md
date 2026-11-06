@@ -76,3 +76,14 @@ This ledger captures the project work and validations reported in the conversati
 - Applied `kubectl apply -k deploy/kubernetes/overlays/dev`: Service and Deployment unchanged.
 - Rollout status successfully rolled out.
 - Dev and Staging `kubectl diff -k` emitted no text; exit codes not captured, so no visible diff recorded without asserting exit code 0.
+
+
+## Architecture baseline and ADR-001 — 2026-11-06
+- Accepted ADR-001: use kind as the local Kubernetes runtime for platform labs; alternatives considered: k3d, OpenShift, managed cloud.
+- Rationale: existing validated three-node kind cluster, lightweight/no-cost local practice; avoid switching runtimes without immediate benefit.
+- Explicit boundaries: kind evidence does not validate OpenShift Routes, SCC, Operators, production HA, or managed-cloud behavior.
+- Architecture overview now separates the implemented local flow (GitHub manifests → Kustomize overlays → kind stayops → Dev/Staging namespaces) from future target capabilities.
+- GitHub ADR: [ADR-001-local-kubernetes-runtime.md](../architecture/decisions/ADR-001-local-kubernetes-runtime.md) (commit `cd23856d2be9c8d527173fc3fce38e2adb727489`).
+- Architecture overview update: commit `3da2add371ffcd977abe8af79250c4e3c94881be`.
+- User synchronized local checkout with successful fast-forward `674e054..3da2add`; ADR file present and `git status --short` showed no changes.
+- Next architecture activity: formalize platform requirements, constraints, and acceptance criteria before choosing any OpenShift/cloud topology or provisioning approach.

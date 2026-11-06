@@ -139,3 +139,11 @@ This ledger captures the project work and validations reported in the conversati
 - Defines intake, namespace/environment, image, resources, health, security, networking, storage, acceptance evidence, rollback, and checklist.
 - NGINX mapping records implemented areas and honest gaps (resources/probes/security/storage/rollback).
 - Next: operationalize FR-04 by applying resource requests/limits and health probes to NGINX and validate rollout/HTTP behavior.
+
+
+## Current progress snapshot — 2026-11-07
+- Planning estimate: approximately **20% complete** for the broad StayOps portfolio scope; this is a qualitative milestone estimate, not a measured percentage or completion forecast.
+- Completed evidence milestones: architecture baseline/ADR, requirements baseline and traceability, workstation capacity assessment, kind-based NGINX dev/staging deployment and service networking, repository CI YAML/Kustomize validation (Actions run #36 success), and workload onboarding standard publication (commit `6755e88`).
+- Current in-progress milestone: apply NGINX CPU/memory requests/limits and startup/readiness/liveness probes, then validate rollout and Service HTTP in dev/staging. No changes applied yet; user supplied live staging evidence showing 3/3 available and current `resources: {}`.
+- Remaining broad scope includes storage/PVC, RBAC/security/admission/network policies, GitOps, monitoring/observability, backup/restore and failure tests, OpenShift topology/features and associated runbooks/portfolio evidence.
+- FR-04 traceability updated to Partial: standard published, compliant workload example and runtime controls pending (GitHub commit `3a558f8df03cedcd4276`).

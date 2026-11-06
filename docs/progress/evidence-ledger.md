@@ -174,3 +174,11 @@ This ledger captures the project work and validations reported in the conversati
 - Storage test pods mounted claims, wrote unique marker values, were deleted/recreated, and read identical marker values afterward in both namespaces.
 - NGINX rollout succeeded in both environments; in-cluster HTTP smoke tests returned HTTP 200; temporary HTTP test pods were deleted.
 - Evidence scope: local kind PVC provisioning, pod-recreation persistence, and dev/staging service smoke tests. Backup/restore, PV reclaim, and production durability remain outside this test.
+
+
+## RBAC least-privilege validation — FULL PASS — 2026-11-07
+- Applied namespace-scoped `stayops-readonly` Roles and auditor RoleBindings in dev and staging. Auditor ServiceAccounts can list pods/get deployments; cannot create deployments or delete pods (authorization checks returned yes/yes/no/no in both namespaces).
+- Dedicated `nginx-runtime` ServiceAccounts created per namespace; NGINX Deployments switched to them with `automountServiceAccountToken: false`.
+- Runtime identity authorization checks denied secret access and pod listing in both namespaces (no/no).
+- NGINX rollouts succeeded: dev 2/2 Ready, staging 3/3 Ready, zero restarts in captured output.
+- Scope: Kubernetes API RBAC and token-mount minimization in local kind. NetworkPolicy enforcement is NOT validated; current kindnet CNI requires separate policy-capable networking evaluation.

@@ -158,3 +158,11 @@ This ledger captures the project work and validations reported in the conversati
 - `kubectl describe deployment` confirmed resources and all probes; Kustomize base/dev/staging render passed; `git diff --check` passed. yamllint reports only existing missing document-start (`---`) warning.
 - Evidence establishes lab runtime behavior, not production sizing, balancing guarantees, or failure recovery.
 - Local manifest change still needs Git commit/push and CI verification. Next: commit this configuration, update FR-04 traceability, then begin persistent storage lab.
+
+
+## Persistent storage provisioning and pod-recreation validation — 2026-11-07
+- StorageClass `standard` (default, `rancher.io/local-path`, `WaitForFirstConsumer`, reclaim policy Delete, expansion disabled) inspected; all three kind nodes Ready.
+- Created/confirmed 1 GiB RWO PVC `stayops-data` in `stayops-dev` and `stayops-staging`; both reached Bound with dynamically provisioned PVs.
+- Storage test pods mounted each claim and wrote unique marker files. Pods were deleted and recreated; marker contents remained unchanged in both namespaces.
+- NGINX rollout succeeded after storage tests. User output confirms validation script reached step 8; final HTTP smoke-test/result lines not included in pasted excerpt, so record only rollout and persistence evidence here.
+- Verified: PVC binding and persistence across pod recreation in local kind. Not verified: backup/restore, PV reclaim behavior, production storage durability, or full final script PASS summary.

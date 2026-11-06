@@ -20,7 +20,7 @@ Prior OpenShift, SNO, and disconnected-mirroring experience informs this project
 |---|---|---|
 | M0 | Scope, architecture, constraints | In progress |
 | M1 | Repository standards and automated validation | In progress |
-| M2 | Local Kubernetes workload baseline | Planned |
+| M2 | Local Kubernetes foundation, NGINX workload + ClusterIP service validation | In progress — cluster, 2 replicas, service and HTTP 200 verified |
 | M3 | Helm packaging and Argo CD GitOps | Planned |
 | M4 | Security and supply-chain checks | Planned |
 | M5 | Metrics, dashboards, operational runbooks | Planned |

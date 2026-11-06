@@ -114,3 +114,11 @@ This ledger captures the project work and validations reported in the conversati
 - Workflow update commit: `95a4217ce24c52fe42dd5de832f2e9e009af3ef4`.
 - CI run outcome pending; workflow must execute on GitHub after synchronization/push. Local rendering should be checked too.
 - Remaining CI gaps: Kubernetes schema/policy validation, workload tests, and deployment verification.
+
+
+## CI execution status — 2026-11-07
+- Local `kubectl kustomize` renders succeeded for base (46 lines), dev (46), staging (51); each command returned exit code 0.
+- GitHub Actions runs for commits `95a4217` and `7985a7e` report conclusion `failure`.
+- GitHub Actions run/job API returned zero jobs for these runs; root cause is not established from available run metadata. Do not claim a green CI result or infer a failing step.
+- Run links: https://github.com/mohammedavl/stayops-platform-engineering/actions/runs/42279735125 and https://github.com/mohammedavl/stayops-platform-engineering/actions/runs/42279760223
+- CI acceptance remains open pending investigation of Actions UI/run details.

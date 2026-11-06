@@ -106,3 +106,11 @@ This ledger captures the project work and validations reported in the conversati
 - Verified local branch `main` tracks `origin/main` at `4a9146b`; `git status -sb` showed clean synchronization (`## main...origin/main`). A second push reported `Everything up-to-date`.
 - SSH authentication verified: `ssh -T git@github.com` returned `Hi mohammedavl! You've successfully authenticated, but GitHub does not provide shell access.`
 - Requirements baseline is documentation evidence; it does not mean all requirements are implemented or accepted by tests.
+
+
+## CI pipeline audit and Kustomize validation — 2026-11-07
+- Audited `.github/workflows/validate.yml`: triggers on push to main, pull_request, and workflow_dispatch; read-only contents permission; Python 3.12 + yamllint (relaxed config, line length disabled).
+- Added a separate `kustomize` job using kubectl v1.35.0 to build base, dev, and staging manifests with `kubectl kustomize`. This is offline manifest rendering/validation, not a cluster deployment or health test.
+- Workflow update commit: `95a4217ce24c52fe42dd5de832f2e9e009af3ef4`.
+- CI run outcome pending; workflow must execute on GitHub after synchronization/push. Local rendering should be checked too.
+- Remaining CI gaps: Kubernetes schema/policy validation, workload tests, and deployment verification.

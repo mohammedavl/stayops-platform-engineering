@@ -98,3 +98,11 @@ This ledger captures the project work and validations reported in the conversati
 - Git working tree clean.
 - Constraint: use Docker/WSL effective resource view for lab sizing; host physical RAM (~31.75 GiB previously observed) is not equivalent to currently allocated/visible WSL memory.
 - Recommendation: retain kind as validated baseline; assess OpenShift topology and resource budgets separately before installation.
+
+
+## Platform requirements baseline — 2026-11-07
+- Added `docs/architecture/requirements/platform-requirements.md` defining 10 functional requirements, 6 non-functional requirements, current environment constraints, acceptance criteria, and explicit pending status for detailed topology/implementation decisions.
+- Local commit `b295e27` (`docs: define platform requirements baseline`) pushed successfully to `main`; push advanced remote from `6fd5978` to `4a9146b`.
+- Verified local branch `main` tracks `origin/main` at `4a9146b`; `git status -sb` showed clean synchronization (`## main...origin/main`). A second push reported `Everything up-to-date`.
+- SSH authentication verified: `ssh -T git@github.com` returned `Hi mohammedavl! You've successfully authenticated, but GitHub does not provide shell access.`
+- Requirements baseline is documentation evidence; it does not mean all requirements are implemented or accepted by tests.

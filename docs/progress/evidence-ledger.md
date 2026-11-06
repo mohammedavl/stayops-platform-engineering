@@ -131,3 +131,11 @@ This ledger captures the project work and validations reported in the conversati
 - Non-blocking annotations remain: missing YAML document-start markers, truthy warning for workflow `on`, and Node.js 20 action deprecation notice. CI success does not establish cluster deployment or runtime health.
 - CI baseline acceptance criterion closed: repository YAML lint and Kustomize rendering run automatically on push/PR/manual dispatch.
 - Remaining CI maturity work: Kubernetes schema/policy checks, test/deployment validation, and action runtime modernization.
+
+
+## Workload onboarding standard published — 2026-11-07
+- Standard: [docs/platform/workload-onboarding-standard.md](../platform/workload-onboarding-standard.md)
+- Local commit rebased and published as `6755e88` (`docs: define workload onboarding standard`); push succeeded and local main matched origin/main.
+- Defines intake, namespace/environment, image, resources, health, security, networking, storage, acceptance evidence, rollback, and checklist.
+- NGINX mapping records implemented areas and honest gaps (resources/probes/security/storage/rollback).
+- Next: operationalize FR-04 by applying resource requests/limits and health probes to NGINX and validate rollout/HTTP behavior.

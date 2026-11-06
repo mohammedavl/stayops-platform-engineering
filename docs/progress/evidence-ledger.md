@@ -182,3 +182,13 @@ This ledger captures the project work and validations reported in the conversati
 - Runtime identity authorization checks denied secret access and pod listing in both namespaces (no/no).
 - NGINX rollouts succeeded: dev 2/2 Ready, staging 3/3 Ready, zero restarts in captured output.
 - Scope: Kubernetes API RBAC and token-mount minimization in local kind. NetworkPolicy enforcement is NOT validated; current kindnet CNI requires separate policy-capable networking evaluation.
+
+
+## NetworkPolicy enforcement in isolated Calico kind cluster — PASS — 2026-11-07
+- Created isolated `stayops-netsec` kind cluster with default CNI disabled and Calico v3.33 installed; Calico components and webhook deployment reported Available/Ready.
+- Baseline: client pod reached NGINX Service (HTTP response).
+- Applied ingress default-deny policy selecting `app=web`; client request timed out (curl exit 28), as expected.
+- Added allow policy for TCP/80 from pods labeled `app=client`; authorized client returned NGINX welcome HTML.
+- Created `app=unauthorized` pod; request timed out (curl exit 28), while authorized client continued to return NGINX HTML.
+- Result: selective ingress enforcement verified (baseline allowed → default deny blocked → explicit authorized allow → unauthorized blocked).
+- Scope: isolated local kind + Calico lab only. Does not prove egress controls, cross-namespace policy, production CNI behavior, or production security posture. Test namespace/policies remain in the isolated lab pending cleanup/documentation automation.

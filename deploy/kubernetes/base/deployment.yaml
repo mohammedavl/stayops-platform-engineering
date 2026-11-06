@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: stayops-dev
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:stable
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              printf '<html><body><h1>StayOps Kubernetes Lab</h1><p>Served by backend: %s</p></body></html>\n' "$HOSTNAME" > /usr/share/nginx/html/index.html
+              exec nginx -g "daemon off;"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP

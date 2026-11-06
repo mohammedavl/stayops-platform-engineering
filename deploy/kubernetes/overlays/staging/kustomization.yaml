@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: stayops-staging
 resources:
   - ../../base
+  - namespace.yaml
 patches:
   - target:
       group: apps

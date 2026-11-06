@@ -1,6 +1,6 @@
 # StayOps Lab Evidence — Workload & Service Networking
 
-**Status:** Validated from user-provided terminal output  
+**Status:** Validated from user-provided terminal output and screenshot  
 **Environment:** Local kind Kubernetes cluster (not OpenShift / not production)  
 **Namespace:** `stayops-dev`
 
@@ -27,6 +27,20 @@ kubectl get endpoints nginx-service -n stayops-dev
 ```
 **Observed:** ClusterIP `10.96.133.129`, TCP port 80, selector `app=nginx`, two backend endpoints `10.244.1.2:80` and `10.244.2.2:80`.
 
+## EndpointSlice validation — screenshot captured 2026-11-06
+Commands:
+```bash
+kubectl get endpointslices -n stayops-dev -l kubernetes.io/service-name=nginx-service
+kubectl describe endpointslice -n stayops-dev -l kubernetes.io/service-name=nginx-service
+```
+**Observed from screenshot:**
+- EndpointSlice: `nginx-service-2sk27`, AddressType IPv4, port 80/TCP.
+- Both endpoint addresses are Ready (`Ready: true`):
+  - `10.244.1.2` → pod `nginx-68964fc4cb-dxgnj`, node `stayops-worker2`
+  - `10.244.2.2` → pod `nginx-68964fc4cb-z5rs2`, node `stayops-worker`
+- Service label `kubernetes.io/service-name=nginx-service`; pod target references present.
+- The previous `lb-test` temporary pod was deleted after its test.
+
 > Kubernetes v1.33+ deprecates the legacy Endpoints API; EndpointSlices are the modern resource to inspect.
 
 ## Connectivity test
@@ -36,4 +50,4 @@ kubectl run curl-test --image=curlimages/curl --restart=Never --rm -it --namespa
 **Observed:** HTTP `200 OK`, Server `nginx/1.30.6`; temporary test pod deleted after command.
 
 ## Evidence / claim boundary
-This confirms workload scheduling, ClusterIP service creation, backend endpoint registration, in-cluster DNS resolution, and HTTP connectivity from a temporary pod. It does not yet demonstrate external ingress, TLS, persistent storage, or production HA.
+This confirms workload scheduling, ClusterIP service creation, EndpointSlice backend registration/readiness, in-cluster DNS resolution, and HTTP connectivity from a temporary pod. It does not yet demonstrate per-backend load-balancing distribution, external ingress, TLS, persistent storage, or production HA.

@@ -28,26 +28,32 @@ kubectl get endpoints nginx-service -n stayops-dev
 **Observed:** ClusterIP `10.96.133.129`, TCP port 80, selector `app=nginx`, two backend endpoints `10.244.1.2:80` and `10.244.2.2:80`.
 
 ## EndpointSlice validation — screenshot captured 2026-11-06
-Commands:
 ```bash
 kubectl get endpointslices -n stayops-dev -l kubernetes.io/service-name=nginx-service
 kubectl describe endpointslice -n stayops-dev -l kubernetes.io/service-name=nginx-service
 ```
-**Observed from screenshot:**
-- EndpointSlice: `nginx-service-2sk27`, AddressType IPv4, port 80/TCP.
-- Both endpoint addresses are Ready (`Ready: true`):
-  - `10.244.1.2` → pod `nginx-68964fc4cb-dxgnj`, node `stayops-worker2`
-  - `10.244.2.2` → pod `nginx-68964fc4cb-z5rs2`, node `stayops-worker`
-- Service label `kubernetes.io/service-name=nginx-service`; pod target references present.
-- The previous `lb-test` temporary pod was deleted after its test.
+Observed EndpointSlice `nginx-service-2sk27`, IPv4, TCP/80. Both endpoints Ready:
+- `10.244.1.2` → pod `nginx-68964fc4cb-dxgnj`, node `stayops-worker2`
+- `10.244.2.2` → pod `nginx-68964fc4cb-z5rs2`, node `stayops-worker`
+Service label and pod target references present.
 
-> Kubernetes v1.33+ deprecates the legacy Endpoints API; EndpointSlices are the modern resource to inspect.
+## NGINX access-log evidence — 2026-11-06
+Command:
+```bash
+kubectl logs -n stayops-dev -l app=nginx --tail=5
+```
+User-provided output included:
+- `GET /` requests with HTTP/1.1 status `200`, response size 896 bytes, user agent `Wget`.
+- `HEAD /` request with status `200`, response size 0, user agent `curl/8.23.0`.
+- Client address shown as `10.244.2.4`.
+- NGINX worker process startup notices.
+This demonstrates successful HTTP requests recorded in NGINX logs. Because the selector-based command aggregates replica logs and output did not label the source pod for each line, it is not yet proof of request distribution between replicas.
 
 ## Connectivity test
 ```bash
 kubectl run curl-test --image=curlimages/curl --restart=Never --rm -it --namespace=stayops-dev -- curl -I http://nginx-service
 ```
-**Observed:** HTTP `200 OK`, Server `nginx/1.30.6`; temporary test pod deleted after command.
+Observed HTTP `200 OK`, Server `nginx/1.30.6`; temporary test pod deleted after command.
 
 ## Evidence / claim boundary
-This confirms workload scheduling, ClusterIP service creation, EndpointSlice backend registration/readiness, in-cluster DNS resolution, and HTTP connectivity from a temporary pod. It does not yet demonstrate per-backend load-balancing distribution, external ingress, TLS, persistent storage, or production HA.
+This confirms workload scheduling, ClusterIP service creation, EndpointSlice backend registration/readiness, in-cluster DNS resolution, and HTTP connectivity from a temporary pod, with access-log confirmation. It does not yet demonstrate per-backend load-balancing distribution, external ingress, TLS, persistent storage, or production HA.

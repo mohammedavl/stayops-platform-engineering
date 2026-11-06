@@ -42,3 +42,8 @@ After Kustomize apply, user ran four curls through `nginx-service`. All four ret
 
 ## Evidence / claim boundary
 Demonstrated multi-node scheduling, ClusterIP and ready endpoints, in-cluster HTTP, sampled requests reaching both replicas, and successful Kustomize apply/rollout plus post-apply traffic. Does not demonstrate external ingress, TLS, persistence, production HA, or quantitative performance.
+
+
+## Staging overlay deployment — 2026-11-06
+
+User pulled corrected staging overlay (commit 674e054 includes the namespace manifest) and ran `kubectl apply -k deploy/kubernetes/overlays/staging`. Namespace, Service, and Deployment were created successfully. Rollout completed: Deployment nginx 3/3 available. Service nginx-service is ClusterIP 10.96.251.21:80. Three pods Running/Ready with zero restarts: nginx-68cd94f5d4-2g7m4 (10.244.2.12, stayops-worker), nginx-68cd94f5d4-9n9q5 (10.244.1.6, stayops-worker2), nginx-68cd94f5d4-t7s5l (10.244.2.11, stayops-worker). Service endpoints list all three pod IPs on port 80. The deprecated v1 Endpoints warning is informational (EndpointSlice is preferred in Kubernetes 1.33+); it did not affect rollout. This validates staging resource creation, replica count, scheduling, and endpoint registration; HTTP response validation is the next step.

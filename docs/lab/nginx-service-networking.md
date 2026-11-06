@@ -47,3 +47,14 @@ Demonstrated multi-node scheduling, ClusterIP and ready endpoints, in-cluster HT
 ## Staging overlay deployment — 2026-11-06
 
 User pulled corrected staging overlay (commit 674e054 includes the namespace manifest) and ran `kubectl apply -k deploy/kubernetes/overlays/staging`. Namespace, Service, and Deployment were created successfully. Rollout completed: Deployment nginx 3/3 available. Service nginx-service is ClusterIP 10.96.251.21:80. Three pods Running/Ready with zero restarts: nginx-68cd94f5d4-2g7m4 (10.244.2.12, stayops-worker), nginx-68cd94f5d4-9n9q5 (10.244.1.6, stayops-worker2), nginx-68cd94f5d4-t7s5l (10.244.2.11, stayops-worker). Service endpoints list all three pod IPs on port 80. The deprecated v1 Endpoints warning is informational (EndpointSlice is preferred in Kubernetes 1.33+); it did not affect rollout. This validates staging resource creation, replica count, scheduling, and endpoint registration; HTTP response validation is the next step.
+
+
+## Staging Service HTTP validation — 2026-11-06
+
+User ran six curls from a temporary pod in `stayops-staging` against `http://nginx-service`. All six returned the expected StayOps HTML and pod-specific backend identity. Responses alternated between `nginx-68cd94f5d4-2g7m4` (3 responses) and `nginx-68cd94f5d4-9n9q5` (3 responses); the third staging replica `nginx-68cd94f5d4-t7s5l` did not appear in this six-request sample. This proves in-namespace Service DNS/HTTP works and requests reached at least two staging backends. It does not prove even balancing or that every replica receives traffic. Temporary `staging-test` pod was deleted.
+
+### Dev/Staging isolation and overlay result
+
+- Dev overlay: namespace `stayops-dev`, 2 replicas (previously rendered and applied via base; dev overlay render confirms configuration).
+- Staging overlay: namespace `stayops-staging`, 3 replicas; deployed and HTTP-tested successfully.
+- Separate namespaces and namespace-scoped resources establish lab environment separation; this is not a claim of security-grade tenant isolation.

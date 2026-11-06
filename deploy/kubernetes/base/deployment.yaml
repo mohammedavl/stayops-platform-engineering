@@ -21,7 +21,9 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              printf '<html><body><h1>StayOps Kubernetes Lab</h1><p>Served by backend: %s</p></body></html>\n' "$HOSTNAME" > /usr/share/nginx/html/index.html
+              printf '<html><body><h1>StayOps Kubernetes Lab</h1>'\\
+              '<p>Served by backend: %s</p></body></html>\\n' "$HOSTNAME" \\
+                > /usr/share/nginx/html/index.html
               exec nginx -g "daemon off;"
           ports:
             - name: http

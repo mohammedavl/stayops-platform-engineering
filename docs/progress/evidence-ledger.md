@@ -192,3 +192,19 @@ This ledger captures the project work and validations reported in the conversati
 - Created `app=unauthorized` pod; request timed out (curl exit 28), while authorized client continued to return NGINX HTML.
 - Result: selective ingress enforcement verified (baseline allowed → default deny blocked → explicit authorized allow → unauthorized blocked).
 - Scope: isolated local kind + Calico lab only. Does not prove egress controls, cross-namespace policy, production CNI behavior, or production security posture. Test namespace/policies remain in the isolated lab pending cleanup/documentation automation.
+
+## Automated NetworkPolicy validation — PASS — 2026-11-07
+
+Validation script: scripts/validate-network-policy.sh
+Manifest: deploy/kubernetes/security/networkpolicy-lab.yaml
+Cluster: kind-stayops-netsec (isolated Calico cluster)
+
+Automated results:
+- Previous selective allow removed before default-deny test.
+- Default-deny ingress blocks authorized client.
+- Selective allow permits app=client to reach app=web on TCP/80.
+- app=unauthorized remains blocked.
+- Script exits successfully with PASS: NetworkPolicy selective ingress validation.
+
+Scope: Local lab enforcement only. No production cluster, egress restrictions,
+cross-namespace controls, or production security certification implied.

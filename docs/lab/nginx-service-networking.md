@@ -37,17 +37,18 @@ Observed EndpointSlice `nginx-service-2sk27`, IPv4, TCP/80. Both endpoints Ready
 - `10.244.2.2` → pod `nginx-68964fc4cb-z5rs2`, node `stayops-worker`
 Service label and pod target references present.
 
-## NGINX access-log evidence — 2026-11-06
-Command:
+## NGINX request logs — 2026-11-06
+Commands:
 ```bash
 kubectl logs -n stayops-dev -l app=nginx --tail=5
+kubectl logs nginx-68964fc4cb-dxgnj -n stayops-dev --tail=10
+kubectl logs nginx-68964fc4cb-z5rs2 -n stayops-dev --tail=10
 ```
-User-provided output included:
-- `GET /` requests with HTTP/1.1 status `200`, response size 896 bytes, user agent `Wget`.
-- `HEAD /` request with status `200`, response size 0, user agent `curl/8.23.0`.
-- Client address shown as `10.244.2.4`.
-- NGINX worker process startup notices.
-This demonstrates successful HTTP requests recorded in NGINX logs. Because the selector-based command aggregates replica logs and output did not label the source pod for each line, it is not yet proof of request distribution between replicas.
+Observed from per-pod output:
+- `nginx-68964fc4cb-dxgnj` (worker2): GET / HTTP/1.1 → 200, 896 bytes, Wget; client 10.244.2.4.
+- `nginx-68964fc4cb-z5rs2` (worker): HEAD / HTTP/1.1 → 200, 0 bytes, curl/8.23.0; GET / HTTP/1.1 → 200, 896 bytes, Wget; client 10.244.2.4.
+- NGINX worker startup notices also present.
+This confirms both individual NGINX replicas recorded successful HTTP requests. It is consistent with requests reaching both backends; the logs alone do not prove all requests used the Service or quantify balancing distribution.
 
 ## Connectivity test
 ```bash
@@ -56,4 +57,4 @@ kubectl run curl-test --image=curlimages/curl --restart=Never --rm -it --namespa
 Observed HTTP `200 OK`, Server `nginx/1.30.6`; temporary test pod deleted after command.
 
 ## Evidence / claim boundary
-This confirms workload scheduling, ClusterIP service creation, EndpointSlice backend registration/readiness, in-cluster DNS resolution, and HTTP connectivity from a temporary pod, with access-log confirmation. It does not yet demonstrate per-backend load-balancing distribution, external ingress, TLS, persistent storage, or production HA.
+This confirms workload scheduling, ClusterIP service creation, EndpointSlice backend registration/readiness, in-cluster DNS resolution, HTTP connectivity, and per-replica access-log activity. It does not yet demonstrate quantified load-balancing distribution, external ingress, TLS, persistent storage, or production HA.

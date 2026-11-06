@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-runtime
+  namespace: stayops-dev
+automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: stayops-auditor
+  namespace: stayops-dev
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: stayops-readonly
+  namespace: stayops-dev
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints", "events", "persistentvolumeclaims"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: stayops-auditor-readonly
+  namespace: stayops-dev
+subjects:
+- kind: ServiceAccount
+  name: stayops-auditor
+  namespace: stayops-dev
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: stayops-readonly
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-runtime
+  namespace: stayops-staging
+automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: stayops-auditor
+  namespace: stayops-staging
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: stayops-readonly
+  namespace: stayops-staging
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "endpoints", "events", "persistentvolumeclaims"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: stayops-auditor-readonly
+  namespace: stayops-staging
+subjects:
+- kind: ServiceAccount
+  name: stayops-auditor
+  namespace: stayops-staging
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: stayops-readonly

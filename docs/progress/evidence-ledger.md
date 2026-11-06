@@ -60,3 +60,13 @@ This ledger captures the project work and validations reported in the conversati
 - EndpointSlice inspection / repeated-request test not yet reported executed.
 - External access/Ingress/Route, TLS, persistent storage, Helm packaging, GitOps/Argo CD, RBAC/policies, observability, security/supply-chain, backup/recovery/failure testing not yet implemented in this local lab.
 - No OpenShift deployment in this kind cluster.
+
+
+## Kustomize Dev/Staging environment comparison — 2026-11-06
+- Rendered Dev overlay confirms namespace `stayops-dev` and Deployment replica target 2.
+- Rendered Staging overlay confirms namespace `stayops-staging` and Deployment replica target 3.
+- Live namespace checks: both namespaces Active.
+- Live Dev: nginx Deployment 2/2 available; nginx-service ClusterIP 10.96.133.129:80; two pods Running/Ready, zero restarts, spread across worker and worker2.
+- Live Staging: nginx Deployment 3/3 available; nginx-service ClusterIP 10.96.251.21:80; three pods Running/Ready, zero restarts, spread across worker and worker2.
+- Staging Service HTTP smoke test (six requests) returned expected StayOps HTML; observed two of three backends in sample. See NGINX evidence page for detail.
+- Verified separate namespace/resource configuration and successful staging deployment. Dev overlay rendering is verified; next step is applying Dev overlay explicitly and checking `kubectl diff -k` for both environments (diff exit code 0 means no changes; 1 means differences).
